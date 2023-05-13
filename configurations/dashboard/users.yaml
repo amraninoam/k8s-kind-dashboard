@@ -1,0 +1,67 @@
+#Two users in this yaml: admin-user and readonly-user
+---
+#admin-user
+#it has SA, ClusterRoleBinding and a sercet to hold the token 
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: admin-user
+  namespace: dashboard
+secrets:
+- name: dashboard-admin-token
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: admin-user
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: cluster-admin
+subjects:
+- kind: ServiceAccount
+  name: admin-user
+  namespace: dashboard
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: dashboard-admin-token
+  namespace: dashboard
+  annotations:
+    kubernetes.io/service-account.name: admin-user
+type: kubernetes.io/service-account-token
+---
+
+#readonly-user
+#it has SA, ClusterRoleBinding and a sercet to hold the token 
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: readonly-user
+  namespace: dashboard
+secrets:
+- name: dashboard-read-only-token
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: readonly-user
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- kind: ServiceAccount
+  name: readonly-user
+  namespace: dashboard
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: dashboard-read-only-token
+  namespace: dashboard
+  annotations:
+    kubernetes.io/service-account.name: readonly-user
+type: kubernetes.io/service-account-token

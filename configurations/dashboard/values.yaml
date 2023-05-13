@@ -1,0 +1,15 @@
+# dashboard-values.yaml
+
+extraArgs:
+  - --enable-insecure-login
+
+service:
+  type: ClusterIP
+
+ingress:
+  enabled: true
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+  path: /
+
+protocolHttp: true
