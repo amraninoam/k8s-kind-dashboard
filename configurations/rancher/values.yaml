@@ -1,0 +1,6 @@
+hostname: rancher.sdp2023.io
+bootstrapPassword: admin
+global:
+  cattle:
+    psp: 
+      enabled: false

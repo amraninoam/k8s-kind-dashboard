@@ -14,5 +14,8 @@ kubectl wait --namespace ingress-nginx --for=condition=ready pod -l app.kubernet
 echo "Installing dashboard..."
 ./install_dashboard.sh
 
+echo "Installing rancher..."
+./install_rancher.sh
+
 echo "Installing Metrics Server"
 ./install_metrics_server.sh
